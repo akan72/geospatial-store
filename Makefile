@@ -1,13 +1,25 @@
 .PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3
 
+app="comp590"
+export FLASK_APP=app/__init__.py
+export FLASK_DEBUG=1
+
+all: build run
+
+build:
+	docker build -t ${app}:latest .
+
+run:
+	docker run -d -p 5000:5000 ${app}
+	# docker run -v $(pwd)/:/app -p 5000:5000 --rm ${app} flask run --host 0.0.0.0 --port 5000
+
 #################################################################################
 # GLOBALS                                                                       #
 #################################################################################
 
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
-PROJECT_NAME = COMP590
+PROJECT_NAME = comp590
 PYTHON_INTERPRETER = python3
 
 ifeq (,$(shell which conda))
@@ -37,22 +49,6 @@ clean:
 ## Lint using flake8
 lint:
 	flake8 src
-
-## Upload Data to S3
-sync_data_to_s3:
-ifeq (default,$(PROFILE))
-	aws s3 sync data/ s3://$(BUCKET)/data/
-else
-	aws s3 sync data/ s3://$(BUCKET)/data/ --profile $(PROFILE)
-endif
-
-## Download Data from S3
-sync_data_from_s3:
-ifeq (default,$(PROFILE))
-	aws s3 sync s3://$(BUCKET)/data/ data/
-else
-	aws s3 sync s3://$(BUCKET)/data/ data/ --profile $(PROFILE)
-endif
 
 ## Set up python interpreter environment
 create_environment:
