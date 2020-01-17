@@ -20,7 +20,7 @@ def predict_petal_length():
 
 @app.route('/predict_api', methods=['GET', 'POST'])
 def predict_api():
-    data = json.loads(request.get_json())
+    data = request.get_json()
     petal_width = data['petal_width']
 
     prediction_results = predict.predict_length(petal_width)

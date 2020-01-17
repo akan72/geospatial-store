@@ -1,7 +1,7 @@
 import requests 
 import json
 
-data = json.dumps({'petal_width': 2})
+data = {'petal_width': 2}
 
 url = 'http://localhost:5000/predict_api'
 r = requests.post(url, json=data)
