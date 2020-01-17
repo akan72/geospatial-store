@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template
 import json
 import traceback
 
@@ -7,24 +7,24 @@ from app import app
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict_petal_length():
-    if request.args:
-        petal_width = request.args.get('petal_width')
-        prediction_results = predict.predict_length(petal_width)
-        response = json.dumps(prediction_results[0])
+    petal_width = request.args.get('petal_width')
 
-        return response
-    else: 
-        return "No petal_width was passed"
+    prediction_results = predict.predict_length(petal_width)
+    response = json.dumps(prediction_results[0])
 
-    # try: 
-    #     petal_width = request.args.get('petal_width')
-    #     prediction_results = predict.predict_length(petal_width)
-    #     response = json.dumps(prediction_results[0])
+    return response
 
-    #     return response
-    # except Exception:
-    #     return 404
+@app.route('/predict_api', methods=['GET', 'POST'])
+def predict_api():
+    data = json.loads(request.get_json())
+    petal_width = data['petal_width']
+
+    prediction_results = predict.predict_length(petal_width)
+    
+    response = json.dumps(prediction_results[0])
+
+    return response
