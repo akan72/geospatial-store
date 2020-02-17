@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Satellite Object Detection</title>
+    </head>
+    <body>
+        <h3>Input a Petal_Width</h3>
+        <ul>
+            {% for file in files %}
+                <img src="{{ url_for('static', filename= 'uploads/'+file.filename) }}" style="height: 100%; width: 100%;"/>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
