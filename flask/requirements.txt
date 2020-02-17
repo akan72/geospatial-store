@@ -7,6 +7,7 @@ seaborn==0.9.0
 requests==2.22.0
 Werkzeug==0.16.0
 uWSGI==2.0.18
+fastai==1.0.60
 
 # external requirements
 click
