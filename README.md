@@ -5,7 +5,7 @@ Final project for UNC COMP 590: Geospatial Store
 
 Project Organization
 ------------
-
+```
 ├── LICENSE                     
 ├── README.md                   
 ├── docker-compose.yml          <- Configuration file for Docker Compose 
@@ -22,9 +22,9 @@ Project Organization
 │   ├── notebooks               <- Jupyter notebooks for exploration and model testing
 │   ├── requirements.txt        <- The requirements file for reproducing the analysis environment
 │   ├── src                     <- Directory that holds all app application and modeling code
-│   │   ├── app                 <- Directory that holds all flask application logic and frontend
+│   │   ├── app                 <- Directory that holds all `Flask` application logic and frontend
 │   │   │   ├── static          <- Directory to hold static files for the `Flask` application
-│   │   │   ├── templates       <- Directory to hold all .html templates for the Flask application
+│   │   │   ├── templates       <- Directory to hold all .html templates for the `Flask` application
 │   │   │   └── views.py        <- Script that contains all `Flask` application logic
 │   │   ├── data                <- Scripts to download or generate data
 │   │   ├── features            <- Scripts to turn raw data into features for modeling
@@ -38,5 +38,5 @@ Project Organization
 ├── references                  <- Data dictionaries, manuals, and all other explanatory materials
 └── reports                     <- Generated analysis as HTML, PDF, LaTeX, etc.
     └── figures                 <- Generated graphics and figures to be used in reporting
-
+```
 --------
