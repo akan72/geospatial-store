@@ -3,7 +3,49 @@ COMP590
 
 Final project for UNC COMP 590: Geospatial Store
 
-Project Organization
+We use the [uwsgi-nginx-flask](https://hub.docker.com/r/tiangolo/uwsgi-nginx-flask/) Docker image to deploy the application, along with Docker Compose to build and configure our services. We have one service for `Flask` and one service for `Nginx`.
+
+Setup
+------------
+First, clone this repository to your local machine and `cd` into it: 
+```
+git clone https://github.com/akan72/comp590
+cd comp590
+```
+
+Next, we must set up the `Flask` development environment. This repository utilizes the `dotenv` package to manage app settings. 
+Starting off, we will use `development` mode and thus flask requires us to define two environment variables.
+
+```
+echo "FLASK_APP=src/app/__init__.py" >> flask/.env
+echo "FLASK_ENV=development" >> flask/.env
+```
+
+Build and Test 
+------------
+To build our services, we will now begin using `Docker Compose`. After starting up the Docker daemon on your machine, run:
+
+```
+docker-compose build
+docker-compose up 
+```
+
+The following achieves the same result:
+
+```
+docker-compose up --build
+```
+The app may now be viewed by visiting http://127.0.0.1/ or http://localhost/ in a web browser.
+You must rebuild the image every time changes are made, but if you wish to restart the application without having made changes, only need to run:
+
+```
+docker-compose up
+```
+
+For rapid development and testing, the `Flask` application can be run without the web services by running `flask run` in the same directory.
+
+
+Project Directory Organization
 ------------
 ```
 ├── LICENSE                     
