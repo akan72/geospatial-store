@@ -42,7 +42,7 @@ You must rebuild the image every time changes are made, but if you wish to resta
 docker-compose up
 ```
 
-For rapid development and testing, the `Flask` application can be run without the web services by running `flask run` in the same directory.
+For rapid development and testing, the `Flask` application can be run without the web services by running `flask run` within the `flask` directory and navigating to http://127.0.0.1:5000/.
 
 
 Project Directory Organization
