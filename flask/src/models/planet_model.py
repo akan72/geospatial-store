@@ -25,13 +25,8 @@ def predict_landcover_type(filepath: str) -> List[str]:
     """
     image = open_image(filepath)
 
-    # model = pickle.load(open('models/fastai_planet_model.pkl', 'rb'))
+    # https://forums.fast.ai/t/how-to-make-predictions-with-vision-learner-solved/34456/9
     model = load_learner('models/', 'fastai_planet_model.pkl')
-    print(type(model))
 
     return model.predict(image)
 
-# Single image uploading 
-# img = open_image(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-# https://forums.fast.ai/t/how-to-make-predictions-with-vision-learner-solved/34456/9
-# https://docs.fast.ai/vision.image.html
