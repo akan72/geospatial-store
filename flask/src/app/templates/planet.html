@@ -7,7 +7,8 @@
         <h3>Input a Petal_Width</h3>
         <ul>
             {% for file in files %}
-                <img src="{{ url_for('static', filename= 'uploads/'+file.filename) }}" style="height: 100%; width: 100%;"/>
+                <img src="{{ url_for('static', filename='uploads/'+file.filename) }}" style="height: 100%; width: 100%;"/>
+                <a href ="{{ url_for('predict_planet', filename=file.filename) }}">Image is of type: </a>
             {% endfor %}
         </ul>
     </body>
