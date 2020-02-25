@@ -1,6 +1,7 @@
 from flask import request, render_template, flash, redirect, url_for, session, send_from_directory
 import os
 import json
+from typing import List
 
 import src.models.iris_model as iris_model
 import src.models.planet_model as planet_model
@@ -62,7 +63,7 @@ def serve_file(filepath):
 
 # Predict the filetype using our planet model
 @app.route('/predict_planet/<string:filename>', methods=['GET', 'POST'])
-def predict_planet(filename: str) -> str:
+def predict_planet(filename: str) -> List[str]:
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
     prediction_results = planet_model.predict_landcover_type(file_path)
