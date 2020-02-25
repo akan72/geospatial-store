@@ -4,11 +4,11 @@
         <title>Satellite Object Detection</title>
     </head>
     <body>
-        <h3>Input a Petal_Width</h3>
+        <h3>Resnet50 Results</h3>
         <ul>
-            {% for file in files %}
-                <img src="{{ url_for('static', filename='uploads/'+file.filename) }}" style="height: 100%; width: 100%;"/>
-                <a href ="{{ url_for('predict_planet', filename=file.filename) }}">Image is of type: </a>
+            {% for file, result in content.items() %}
+                <img src="{{ url_for('static', filename='uploads/'+file) }}" style="height: auto; width: auto;"/>
+                <p> {{ result }} </p>
             {% endfor %}
         </ul>
     </body>

@@ -38,14 +38,14 @@ def predict_petal_length_api():
 
     return response
 
-# Predict the filetype using our planet model
-@app.route('/predict_planet/<string:filename>', methods=['GET', 'POST'])
-def predict_planet(filename: str) -> List[str]:
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+# # Predict the filetype using our planet model
+# @app.route('/predict_planet/<string:filename>', methods=['GET', 'POST'])
+# def predict_planet(filename: str) -> List[str]:
+#     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
-    prediction_results = planet_model.predict_landcover_type(file_path)
+#     prediction_results = planet_model.predict_landcover_type(file_path)
 
-    return prediction_results
+#     return prediction_results
 
 ### FILE UPLOADS
 
@@ -71,14 +71,25 @@ def allowed_file(filename: str):
 def upload_file():
     if request.method == 'POST':
         files = request.files.getlist('file')
-        for file in files:
-            if allowed_file(file.filename):
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
 
-        return render_template('planet.html', files=files)
+        filenames = []
+        results = []
+        for file in files:
+            name = file.filename
+            if allowed_file(name):
+                filenames.append(name)
+
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], name)
+                file.save(filepath)
+
+                prediction_results = planet_model.predict_landcover_type(filepath)
+                results.append(prediction_results)
+        
+        content = dict(zip(filenames, results))
+        
+        return render_template('planet.html', content=content)
 
     return render_template('file_upload.html')
-
 
 ### IMAGE DISPLAY
 
@@ -86,7 +97,6 @@ def upload_file():
 @app.route('/data/uploads/<filepath>')
 def serve_file(filepath):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
-
 
 ### MISC 
 
