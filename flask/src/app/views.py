@@ -38,15 +38,6 @@ def predict_petal_length_api():
 
     return response
 
-# # Predict the filetype using our planet model
-# @app.route('/predict_planet/<string:filename>', methods=['GET', 'POST'])
-# def predict_planet(filename: str) -> List[str]:
-#     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-
-#     prediction_results = planet_model.predict_landcover_type(file_path)
-
-#     return prediction_results
-
 ### FILE UPLOADS
 
 # Function to determine if the filename is valid and the image if a valid type

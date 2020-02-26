@@ -44,6 +44,9 @@ docker-compose up
 
 For rapid development and testing, the `Flask` application can be run without the web services by running `flask run` within the `flask` directory and navigating to http://127.0.0.1:5000/.
 
+Data Sources
+------------
+For sample satellite images one source is the [Planet Amazon Dataset](https://www.kaggle.com/c/planet-understanding-the-amazon-from-space/data) from Kaggle. After logging in with a Kaggle account, the various .jpg datasets may be installed through the Kaggle CLI or directly downloaded to your machine in a compressed format.
 
 Project Directory Organization
 ------------
