@@ -8,7 +8,9 @@ requests==2.22.0
 Werkzeug==0.16.0
 uWSGI==2.0.18
 fastai==1.0.60
-
+google-api-python-client==1.7.11 
+earthengine-api==0.1.213
+ 
 # external requirements
 click
 Sphinx
