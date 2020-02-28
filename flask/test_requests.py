@@ -3,7 +3,7 @@ import json
 
 data = {'petal_width': 2}
 
-url = 'http://127.0.0.1/predict_petal_length_api'
+url = 'http://127.0.0.1:5000/predict_petal_length_api'
 r = requests.post(url, json=data)
 
 print(r.status_code)
