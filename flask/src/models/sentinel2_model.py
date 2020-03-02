@@ -99,7 +99,7 @@ def train_sentinel_model():
     # .pkl model results
     pickle.dump(classifier, open('models/s2-classifier.pkl','wb'))
 
-    # TODO: Pickle modle_input as well?
+    # TODO: Pickle model_input as well?
 
 def predict_land_type():
     """
