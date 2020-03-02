@@ -2,6 +2,7 @@ from flask import request, render_template, flash, redirect, url_for, session, s
 import os
 import json
 from typing import List
+from PIL import Image
 
 import src.models.iris_model as iris_model
 import src.models.planet_model as planet_model
@@ -82,7 +83,25 @@ def upload_file():
 
     return render_template('file_upload.html')
 
-### IMAGE DISPLAY
+@app.route('/upload_file_api', methods=['POST'])
+def upload_file_api():
+    filenames, results = [], []
+
+    for file in request.files.keys():
+        file = request.files[file]
+        name = file.filename
+        if allowed_file(name):
+            filenames.append(name)
+
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], name)
+            file.save(filepath)
+
+            prediction_results = planet_model.predict_landcover_type(filepath)
+            results.append(prediction_results)
+    
+    content = dict(zip(filenames, results))
+
+    return content
 
 # Endpoint to serve back the uploaded image within planet.html
 @app.route('/data/uploads/<filepath>')
