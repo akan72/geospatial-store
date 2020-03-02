@@ -90,12 +90,6 @@ def serve_file(filepath):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
 
 ### MISC 
-
-@app.route('/plotting', methods=['GET'])
+@app.route('/dashboard', methods=['GET'])
 def do_plot():
-    return render_template('plotting.html')
-
-# Plotting statistics about uploaded imagej
-@app.route('/statistics/', methods=['GET'])
-def show_statistics():
-    pass 
+    return render_template('dashboard.html')
