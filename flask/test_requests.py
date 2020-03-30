@@ -1,15 +1,7 @@
 import requests 
 import json
 
-addr = 'http://127.0.0.1:5000'
-
-iris_url = addr + '/predict_petal_length_api'
-data = {'petal_width': 2}
-
-r = requests.post(iris_url, json=data)
-
-# print(r.status_code)
-# print(r.text)
+addr = 'http://127.0.0.1'
 
 planet_url = addr + '/upload_file_api'
 
