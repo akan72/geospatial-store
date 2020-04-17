@@ -1,13 +1,10 @@
-from flask import request, render_template, flash, redirect, url_for, session, send_from_directory
 import os
 import json
-from typing import List
-from PIL import Image
-
-import src.models.iris_model as iris_model
-import src.models.planet_model as planet_model
+from flask import request, render_template, url_for, send_from_directory, jsonify, Blueprint
 
 from src.app import app
+import src.models.iris_model as iris_model
+import src.models.planet_model as planet_model
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -101,14 +98,10 @@ def upload_file_api():
     
     content = dict(zip(filenames, results))
 
-    return content
+    return jsonify(content)
 
 # Endpoint to serve back the uploaded image within planet.html
 @app.route('/data/uploads/<filepath>')
 def serve_file(filepath):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
-
-### MISC 
-@app.route('/dashboard', methods=['GET'])
-def do_plot():
-    return render_template('dashboard.html')
+    
