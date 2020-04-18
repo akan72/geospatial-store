@@ -3,19 +3,37 @@ version: "3.7"
 services:
   
   flask:
-    build: ./flask
-    volumes: 
-      - "./flask:/app"
     container_name: flask
     restart: always
-    environment:
-      - APP_NAME=Geospatial_Store
-    expose:
-      - 8080
-  
-  nginx:
-    build: ./nginx
-    container_name: nginx
-    restart: always 
+    build: 
+      context: ./flask
     ports:
-      - "80:80"
+      - "5000:80"
+    volumes:
+      - ./flask:/usr/src/app
+    environment:
+      - FLASK_DEBUG=1
+      - IN_CONTAINER=1
+
+  # nginx:
+  #   build: ./nginx
+  #   container_name: nginx
+  #   restart: always 
+  #   ports:
+  #     - "80:80"
+
+  frontend:
+    container_name: react-app
+    build:
+      context: ./frontend
+    volumes:
+      - './frontend:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'
+    depends_on:
+      - "flask"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - HOST_URL=http://192.168.99.100:5000
