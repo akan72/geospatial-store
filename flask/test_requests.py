@@ -1,7 +1,10 @@
 import requests 
 import json
+from flask import jsonify
 
-addr = 'http://127.0.0.1'
+addr = 'http://127.0.0.1:5000'
+if os.getenv('IN_CONTAINER'):
+    addr = addr + ':5000
 
 planet_url = addr + '/upload_file_api'
 
