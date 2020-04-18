@@ -9,6 +9,7 @@ services:
     container_name: flask
     restart: always
     environment:
+      # this flag allows you to hot reload w/o building each time
       FLASK_DEBUG: 1
       # - APP_NAME=Geospatial_Store
     expose:
