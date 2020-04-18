@@ -175,7 +175,7 @@ iframe {
 
 .label-input100 {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   color: #555555;
   line-height: 1.5;
 }
@@ -187,7 +187,7 @@ iframe {
   border-radius: 2px;
 
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   color: #686868;
   line-height: 1.2;
   padding: 0 28px;
@@ -235,7 +235,7 @@ textarea.input100 {
   display: block;
   position: relative;
   z-index: 1;
-  border-radius: 2px;
+  border-radius: 15px;
   overflow: hidden;
 }
 
@@ -275,6 +275,8 @@ textarea.input100 {
   color: #fff;
   line-height: 1.2;
   text-transform: uppercase;
+  font-weight: bold;
+
 }
 
 .wrap-contact100-form-btn:hover .contact100-form-bgbtn {
