@@ -1,4 +1,4 @@
-*.jpg
+frontend/node_modules
 *.png
 notes.txt
 

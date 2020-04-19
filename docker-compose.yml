@@ -3,21 +3,37 @@ version: "3.7"
 services:
   
   flask:
-    build: ./flask
-    volumes: 
-      - "./flask:/app"
     container_name: flask
     restart: always
+    build: 
+      context: ./flask
+    volumes:
+      - ./flask:/usr/src/app
     environment:
-      # this flag allows you to hot reload w/o building each time
       FLASK_DEBUG: 1
-      # - APP_NAME=Geospatial_Store
+      IN_CONTAINER: 1
     expose:
       - 8080
-  
+
   nginx:
     build: ./nginx
     container_name: nginx
     restart: always 
     ports:
       - "80:80"
+
+  # frontend:
+  #   container_name: react-app
+  #   build:
+  #     context: ./frontend
+  #   volumes:
+  #     - './frontend:/usr/src/app'
+  #     - '/usr/src/app/node_modules'
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - "flask"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - CHOKIDAR_USEPOLLING=true
+  #     - HOST_URL=http://192.168.99.100:5000
