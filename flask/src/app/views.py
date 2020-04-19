@@ -2,7 +2,8 @@ import os, sys
 import json
 from flask import request, render_template, url_for, send_from_directory, jsonify, Blueprint
 
-from src.app import app
+from src.app import app, db
+from src.app.models import PlanetPrediction
 import src.models.iris_model as iris_model
 import src.models.planet_model as planet_model
 
@@ -11,7 +12,6 @@ main = Blueprint('main', __name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 # Index
-## TODO: Allow users to choose between models
 @main.route('/')
 def index():
     return render_template('index.html')
@@ -47,7 +47,7 @@ def predict_petal_length():
 
 # Function to determine if the filename is valid and the image if a valid type
 def allowed_file(filename: str):
-    """ Determine if filename is valid.
+    """Determine if filename is valid.
 
     Function that determines if an image is valid upload to
     the Flask application given its extension {.png, .jpg, .jpeg}.
@@ -63,49 +63,54 @@ def allowed_file(filename: str):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Upload the file to our system
+@main.route('/upload_image_api', methods=['GET', 'POST'])
 @main.route('/upload_image', methods=['GET', 'POST'])
 def upload_image():
+    # If the API does not receive a POST request, return back to the image upload page
     if request.method == 'POST':
-        files = request.files.getlist('file')
+        images, filenames = [], []
 
-        filenames, results = [], []
+        # If the image input is in JSON format, iterate over the keys and save files with valid extensions
+        if request.is_json: 
+            for file in request.files.keys():
+                image = request.files[file]
+                name = file.filename
+
+                if allowed_file(name):
+                    images.append(image)
+                    filenames.append(name)
+
+        # If image input is thorugh a form, do the same 
+        else:
+            for file in request.files.getlist('file'):
+                name = file.filename
+
+                if allowed_file(name):
+                    images.append(file)
+                    filenames.append(name)
+  
+        results = []
         
-        for file in files:
-            name = file.filename
-            if allowed_file(name):
-                filenames.append(name)
-
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], name)
-                file.save(filepath)
-
-                prediction_results = planet_model.predict_landcover_type(filepath)
-                results.append(prediction_results)
-        
-        content = dict(zip(filenames, results))
-        
-        return render_template('image_result.html', content=content)
-
-    return render_template('image_upload.html')
-
-@main.route('/upload_image_api', methods=['GET', 'POST'])
-def upload_image_api():
-    filenames, results = [], []
-
-    for file in request.files.keys():
-        file = request.files[file]
-        name = file.filename
-        if allowed_file(name):
-            filenames.append(name)
-
+        # Iterate over all of the valid files and save to the filesystem
+        for file, name in zip(images, filenames):
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], name)
             file.save(filepath)
 
+            # Run the landcover prediction model on the file and save results
             prediction_results = planet_model.predict_landcover_type(filepath)
-            results.append(prediction_results)
-    
-    content = dict(zip(filenames, results))
 
-    return jsonify(content)
+            results.append(prediction_results)
+        
+        # Zip together results with file names for storage
+        output = dict(zip(filenames, results))
+
+        # If calling the endpoint through the application, render the results page, else just return the predictions
+        if request.path == '/upload_image':
+            return render_template('image_result.html', content=output)
+
+        return jsonify(output)
+
+    return render_template('image_upload.html')
 
 # Endpoint to serve back the uploaded image to image_result.html
 @main.route('/data/uploads/<filepath>')
