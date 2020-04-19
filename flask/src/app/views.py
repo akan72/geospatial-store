@@ -1,5 +1,8 @@
 import os, sys
 import json
+import random
+import pickle
+import datetime
 from flask import request, render_template, url_for, send_from_directory, jsonify, Blueprint
 
 from src.app import app, db
@@ -101,6 +104,20 @@ def upload_image():
 
             results.append(prediction_results)
         
+            # new_prediction = PlanetPrediction(
+            #     userID=str(random.randint(0, 100)),
+            #     time=datetime.now(),
+            #     modelType='Planet Kaggle Amazon',
+            #     image=,
+            #     result=pickle.dump(results)
+
+
+
+            #             modelType = db.Column(db.String(50), nullable=False)   
+            #               image = db.Column(db.LargeBinary, nullable=False)     
+            #               result = db.Column(db.PickleType)
+            # )
+
         # Zip together results with file names for storage
         output = dict(zip(filenames, results))
 

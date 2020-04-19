@@ -1,12 +1,14 @@
-import requests 
+import os
 import json
+import requests 
 from flask import jsonify
 
 addr = 'http://127.0.0.1:5000'
-if os.getenv('IN_CONTAINER'):
-    addr = addr + ':5000
 
-planet_url = addr + '/upload_file_api'
+# if os.getenv('IN_CONTAINER'):
+#     addr = addr + ':5000'
+
+planet_url = addr + '/upload_image'
 
 files = {
     'file1': open('data/raw/test-jpg/test_11.jpg', 'rb'),
@@ -14,7 +16,7 @@ files = {
     }   
  
 r = requests.post(planet_url, files=files)
-print(r.status_code)
+
 print(r.text)
 
 # curl -F "file=@data/raw/test-jpg/test_11.jpg" http://localhost:5000/upload_file_api
