@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<title>Upload new File</title>
+<h1>Upload new File</h1>
+<form method=post enctype=multipart/form-data action="{{ url_for('main.upload_image') }}"> 
+    <input type=file name=file multiple required>
+    <input type=submit value=Upload>
+</form>
+
+<button type="button" onclick="window.location.href='{{ url_for('main.index') }}'">Back to Index</button>

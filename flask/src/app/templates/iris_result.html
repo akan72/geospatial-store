@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Satellite Object Detection</title>
+    </head>
+    <body>
+        <h3>Iris Model results</h3>
+        {% for input, output in content.items() %}
+        <p> Petal Width: {{ input }}, Petal Length: {{ output }} </p>
+        {% endfor %}
+        <button type="button" onclick="window.location.href='{{ url_for('main.iris') }}'">Back to Input Screen</button>
+        <button type="button" onclick="window.location.href='{{ url_for('main.index') }}'">Choose a different model!</button>
+    </body>
+</html>
