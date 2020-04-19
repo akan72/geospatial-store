@@ -1,13 +1,7 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Satellite Object Detection</title>
-    </head>
-    <body>
-        <h3>Input a Petal_Width</h3>
-        <form action="{{ url_for('predict_petal_length') }}" method="GET">
-            <p><input type="text" name="petal_width" maxlength=3 required><p>
-            <p><input type="submit" value="Predict!" method=get></p>
-        </form>
-    </body>
-</html>
+<title>Upload new File</title>
+<h1>Upload new File</h1>
+<form method=post enctype=multipart/form-data action="{{ url_for('main.upload_image') }}"> 
+    <input type=file name=file multiple required>
+    <input type=submit value=Upload>
+</form>

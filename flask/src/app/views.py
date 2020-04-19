@@ -1,4 +1,4 @@
-import os
+import os, sys
 import json
 from flask import request, render_template, url_for, send_from_directory, jsonify, Blueprint
 
@@ -6,35 +6,36 @@ from src.app import app
 import src.models.iris_model as iris_model
 import src.models.planet_model as planet_model
 
+main = Blueprint('main', __name__)
+
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 # Index
-@app.route('/')
+## TODO: Allow users to choose between models
+@main.route('/')
 def home():
     return render_template('index.html')
 
 ### PREDICTIONS 
+@main.route('/iris')
+def iris():
+    return render_template('iris.html')
 
-# Predict petal length within the application
-@app.route('/predict', methods=['GET', 'POST'])
+# Predict petal length with a POST request or within the application form
+# TODO: Multiple uploads
+@main.route('/predict_petal_length', methods=['GET', 'POST'])
 def predict_petal_length():
-    petal_width = request.args.get('petal_width')
+    error = None
+    # Allow for handling of form input, and 
+    if request.is_json:
+        petal_width = request.get_json()['petal_width']
+    else: 
+        petal_width = request.values['petal_width']
 
-    prediction_results = iris_model.predict_length(petal_width)
-    response = json.dumps(prediction_results[0])
+        prediction_results = iris_model.predict_length(petal_width)
+        response = json.dumps(prediction_results[0])
 
-    return response
-
-# Predict petal length with a POST request to /predict_api
-@app.route('/predict_petal_length_api', methods=['GET', 'POST'])
-def predict_petal_length_api():
-    data = request.get_json()
-    petal_width = data['petal_width']
-
-    prediction_results = iris_model.predict_length(petal_width)
-    response = json.dumps(prediction_results[0])
-
-    return response
+    return jsonify(response)
 
 ### FILE UPLOADS
 
@@ -56,8 +57,9 @@ def allowed_file(filename: str):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Upload the file to our system
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
+# TODO: Change from index.html
+@main.route('/upload_image', methods=['GET', 'POST'])
+def upload_image():
     if request.method == 'POST':
         files = request.files.getlist('file')
 
@@ -78,10 +80,10 @@ def upload_file():
         
         return render_template('planet.html', content=content)
 
-    return render_template('file_upload.html')
+    return render_template('index.html')
 
-@app.route('/upload_file_api', methods=['POST'])
-def upload_file_api():
+@main.route('/upload_image_api', methods=['GET', 'POST'])
+def upload_image_api():
     filenames, results = [], []
 
     for file in request.files.keys():
@@ -100,8 +102,11 @@ def upload_file_api():
 
     return jsonify(content)
 
-# Endpoint to serve back the uploaded image within planet.html
-@app.route('/data/uploads/<filepath>')
+# Endpoint to serve back the uploaded image to planet.html
+@main.route('/data/uploads/<filepath>')
 def serve_file(filepath):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
-    
+
+@main.route('/test')
+def test():
+    return jsonify({'k1': 'v1', 'k2': 'v2', 'k3': 'v3'})
