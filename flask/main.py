@@ -1,5 +1,6 @@
-import os 
 from src.app import app
+
+import os 
 from dotenv import load_dotenv
 
 load_dotenv('.env')
