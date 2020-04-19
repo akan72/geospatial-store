@@ -104,19 +104,16 @@ def upload_image():
 
             results.append(prediction_results)
         
-            # new_prediction = PlanetPrediction(
-            #     userID=str(random.randint(0, 100)),
-            #     time=datetime.now(),
-            #     modelType='Planet Kaggle Amazon',
-            #     image=,
-            #     result=pickle.dump(results)
+            new_prediction = PlanetPrediction(
+                userID=random.randint(0, 100),
+                time=datetime.datetime.now(),
+                modelType='Planet Kaggle Amazon',
+                image=filepath,
+                result=results
+            )
 
-
-
-            #             modelType = db.Column(db.String(50), nullable=False)   
-            #               image = db.Column(db.LargeBinary, nullable=False)     
-            #               result = db.Column(db.PickleType)
-            # )
+            db.session.add(new_prediction)
+            db.session.commit()
 
         # Zip together results with file names for storage
         output = dict(zip(filenames, results))
