@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Iris Prediction</title>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <title>Homepage | Geospatial Analytics</title>
     </head>
     <body>
         <div class="container-contact100" style="background-image: url({{ url_for('static', filename='images/bg-01.jpg') }})">
             <div class="wrap-contact100">
-                <form class="contact100-form validate-form" action="{{ url_for('predict_petal_length') }}" method="GET">
-                    <span class="contact100-form-title">
-                        Predict Iris Petal Length
-                    </span>
-    
-                    <div class="wrap-input100">
-                        <span class="label-input100">Petal Width (in centimeters):</span>
-                        <input class="input100" type="text" name="petal_width" placeholder="5.24" maxlength=3 required>
+                <span class="contact100-form-title">
+                    Choose Your Model
+                </span>
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.iris') }}';">Iris</option>
                     </div>
-    
-                    <div class="container-contact100-form-btn">
-                        <div class="wrap-contact100-form-btn">
-                            <div class="contact100-form-bgbtn"></div>
-                            <button class="contact100-form-btn" method=GET>
-                                Submit 🌸
-                            </button>
-                        </div>
+                </div>
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.upload_image') }}';">Planet Kaggle Amazon</option>
                     </div>
-                </form>
+                </div>
             </div>
-    
             <span class="contact100-more">
                 The Geospatial Store © 2020
             </span>
         </div>
-
     </body>
 </html>
