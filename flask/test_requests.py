@@ -5,10 +5,10 @@ from flask import jsonify
 
 addr = 'http://127.0.0.1:5000'
 
-# if os.getenv('IN_CONTAINER'):
-#     addr = addr + ':5000'
+if os.getenv('IN_CONTAINER'):
+    addr = addr[:-5]
 
-planet_url = addr + '/upload_image'
+planet_url = addr + '/upload_image_api'
 
 files = {
     'file1': open('data/raw/test-jpg/test_11.jpg', 'rb'),
@@ -16,7 +16,9 @@ files = {
     }   
  
 r = requests.post(planet_url, files=files)
-
 print(r.text)
 
+r = requests.post(addr + '/predict_petal_length_api', data={'petal_width': 1})
+print(r.text)
+ 
 # curl -F "file=@data/raw/test-jpg/test_11.jpg" http://localhost:5000/upload_file_api

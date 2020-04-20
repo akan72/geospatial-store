@@ -6,7 +6,7 @@ import datetime
 from flask import request, render_template, url_for, send_from_directory, jsonify, Blueprint
 
 from src.app import app, db
-from src.app.models import PlanetPrediction
+from src.app.models import Prediction
 import src.models.iris_model as iris_model
 import src.models.planet_model as planet_model
 
@@ -37,6 +37,17 @@ def predict_petal_length():
 
     prediction_results = iris_model.predict_length(petal_width)
     response = json.dumps(prediction_results[0])
+
+    new_prediction = Prediction(
+        user_id=random.randint(0, 100),
+        time=datetime.datetime.now(),
+        model_type='Iris',
+        image=None,
+        result=response
+    )
+
+    db.session.add(new_prediction)
+    db.session.commit()
 
     # If the request path is from the GUI, then render the correct template, return a JSON of model results
     if request.path == '/predict_petal_length':
@@ -94,22 +105,21 @@ def upload_image():
   
         results = []
         
-        # Iterate over all of the valid files and save to the filesystem
+        # Iterate over all opf the valid files and save to the filesystem
         for file, name in zip(images, filenames):
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], name)
             file.save(filepath)
 
             # Run the landcover prediction model on the file and save results
             prediction_results = planet_model.predict_landcover_type(filepath)
-
             results.append(prediction_results)
         
-            new_prediction = PlanetPrediction(
-                userID=random.randint(0, 100),
+            new_prediction = Prediction(
+                user_id=random.randint(0, 100),
                 time=datetime.datetime.now(),
-                modelType='Planet Kaggle Amazon',
+                model_type='Planet',
                 image=filepath,
-                result=results
+                result=prediction_results
             )
 
             db.session.add(new_prediction)
@@ -130,6 +140,13 @@ def upload_image():
 @main.route('/data/uploads/<filepath>')
 def serve_file(filepath):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
+
+@main.route('/dashboard/<user_id>')
+def user_display(user_id):
+    query = Prediction.query.filter_by(user_id=user_id)
+    predictions = [u.__dict__ for u in query.all()]
+    
+    return render_template('user_display.html', predictions=predictions)
 
 @main.route('/test')
 def test():
