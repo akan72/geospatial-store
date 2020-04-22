@@ -15,7 +15,8 @@
                     <span>
                         {% for file, result in content.items() %}
                             <img src="{{ url_for('static', filename='uploads/'+file) }}" style="height: auto; width: auto;"/>
-                            <p class="label-input100"> {{ result }} </p>
+                            <p class="label-input100"> Image: {{ file }} </p>
+                            <p class="label-input100"> Characteristics: {{ result }} </p>
                         {% endfor %}
                     </span>
                 </div>
