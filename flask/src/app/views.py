@@ -6,7 +6,7 @@ import datetime
 from flask import request, render_template, url_for, send_from_directory, jsonify, Blueprint
 
 from src.app import app, db
-from src.app.models import PlanetPrediction
+from src.app.models import Prediction
 import src.models.iris_model as iris_model
 import src.models.planet_model as planet_model
 
@@ -41,13 +41,13 @@ def predict_petal_length():
     # New prediction/db update (pulled from master) - 4/21
     # - comment out b/c fastai doesn't work
     
-    # new_prediction = Prediction(
-    #     user_id=random.randint(0, 100),
-    #     time=datetime.datetime.now(),
-    #     model_type='Iris',
-    #     image=None,
-    #     result=response
-    # )
+    new_prediction = Prediction(
+        user_id=random.randint(0, 100),
+        time=datetime.datetime.now(),
+        model_type='Iris',
+        image=None,
+        result=response
+    )
 
     # db.session.add(new_prediction)
     # db.session.commit()
@@ -121,13 +121,13 @@ def upload_image():
             # New prediction/db update (pulled from master) - 4/21
             # - comment out b/c fastai doesn't work
             
-            # new_prediction = PlanetPrediction(
-            #     userID=random.randint(0, 100),
-            #     time=datetime.datetime.now(),
-            #     modelType='Planet Kaggle Amazon',
-            #     image=filepath,
-            #     result=results
-            # )
+            new_prediction = Prediction(
+                user_id=random.randint(0, 100),
+                time=datetime.datetime.now(),
+                model_type='Planet',
+                image=filepath,
+                result=prediction_results
+            )
 
             # db.session.add(new_prediction)
             # db.session.commit()
