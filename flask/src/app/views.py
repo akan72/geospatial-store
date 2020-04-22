@@ -41,16 +41,16 @@ def predict_petal_length():
     # New prediction/db update (pulled from master) - 4/21
     # - comment out b/c fastai doesn't work
     
-    new_prediction = Prediction(
-        user_id=random.randint(0, 100),
-        time=datetime.datetime.now(),
-        model_type='Iris',
-        image=None,
-        result=response
-    )
+    # new_prediction = Prediction(
+    #     user_id=random.randint(0, 100),
+    #     time=datetime.datetime.now(),
+    #     model_type='Iris',
+    #     image=None,
+    #     result=response
+    # )
 
-    db.session.add(new_prediction)
-    db.session.commit()
+    # db.session.add(new_prediction)
+    # db.session.commit()
 
     # If the request path is from the GUI, then render the correct template, return a JSON of model results
     if request.path == '/predict_petal_length':
@@ -121,16 +121,16 @@ def upload_image():
             # New prediction/db update (pulled from master) - 4/21
             # - comment out b/c fastai doesn't work
             
-            new_prediction = PlanetPrediction(
-                userID=random.randint(0, 100),
-                time=datetime.datetime.now(),
-                modelType='Planet Kaggle Amazon',
-                image=filepath,
-                result=results
-            )
+            # new_prediction = PlanetPrediction(
+            #     userID=random.randint(0, 100),
+            #     time=datetime.datetime.now(),
+            #     modelType='Planet Kaggle Amazon',
+            #     image=filepath,
+            #     result=results
+            # )
 
-            db.session.add(new_prediction)
-            db.session.commit()
+            # db.session.add(new_prediction)
+            # db.session.commit()
 
         # Zip together results with file names for storage
         output = dict(zip(filenames, results))
