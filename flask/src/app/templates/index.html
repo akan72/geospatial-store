@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Satellite Object Detection</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <title>Homepage | Geospatial Analytics</title>
     </head>
     <body>
-        <h3>Choose the model that you would like to use!</h3>
-        <div>
-            <button display="block" onclick="window.location.href='{{ url_for('main.iris') }}';">Iris</option>
-            <button display="block" onclick="window.location.href='{{ url_for('main.upload_image') }}';">Planet Kaggle Amazon</option>
+        <div class="container-contact100" style="background-image: url({{ url_for('static', filename='images/bg-01.jpg') }})">
+            <div class="wrap-contact100">
+                <span class="contact100-form-title">
+                    Choose Your Model
+                </span>
+
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.iris') }}';">Iris</option>
+                    </div>
+                </div>
+
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.upload_image') }}';">Planet Kaggle Amazon</option>
+                    </div>
+                </div>
+            </div>
+
+            <span class="contact100-more">
+                The Geospatial Store © 2020
+            </span>
         </div>
     </body>
 </html>

@@ -25,7 +25,7 @@ def iris():
     return render_template('iris.html')
 
 # Predict petal length with a POST request or within the application form
-# TODO: Multiple uploads
+# TODO: Multiple uploads?
 @main.route('/predict_petal_length_api', methods=['GET', 'POST'])
 @main.route('/predict_petal_length', methods=['GET', 'POST'])
 def predict_petal_length():
@@ -51,7 +51,7 @@ def predict_petal_length():
 
     # If the request path is from the GUI, then render the correct template, return a JSON of model results
     if request.path == '/predict_petal_length':
-        content = dict(zip(petal_width, response))
+        content = {petal_width: response}
 
         return render_template('iris_result.html', content=content)
 
@@ -122,8 +122,8 @@ def upload_image():
                 result=prediction_results
             )
 
-            db.session.add(new_prediction)
-            db.session.commit()
+            # db.session.add(new_prediction)
+            # db.session.commit()
 
         # Zip together results with file names for storage
         output = dict(zip(filenames, results))

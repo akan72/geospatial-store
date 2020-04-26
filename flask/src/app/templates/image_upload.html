@@ -1,9 +1,38 @@
 <!DOCTYPE html>
-<title>Upload new File</title>
-<h1>Upload new File</h1>
-<form method=post enctype=multipart/form-data action="{{ url_for('main.upload_image') }}"> 
-    <input type=file name=file multiple required>
-    <input type=submit value=Upload>
-</form>
-
-<button type="button" onclick="window.location.href='{{ url_for('main.index') }}'">Back to Index</button>
+<html>
+    <head>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <title>Planet x Amazon | Geospatial Analytics</title>
+    </head>
+    <body>
+        <div class="container-contact100" style="background-image: url({{ url_for('static', filename='images/bg-01.jpg') }})">
+            <div class="wrap-contact100">
+                <form class="contact100-form validate-form" enctype=multipart/form-data action="{{ url_for('main.upload_image') }}" method="POST">
+                    <span class="contact100-form-title">
+                        Satellite Object Detection
+                    </span>
+    
+                    <div class="wrap-input100">
+                        <label class="label-input100 custom-file-upload" >
+                            Choose Files
+                            <input type=file name=file multiple required>
+                        </label>
+                    </div>
+    
+                    <div class="container-contact100-form-btn">
+                        <div class="wrap-contact100-form-btn">
+                            <div class="contact100-form-bgbtn"></div>
+                            <button class="contact100-form-btn" type="submit">
+                                Upload 📂
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <span class="contact100-more">
+                The Geospatial Store © 2020
+            </span>
+        </div>
+    </body>
+</html>

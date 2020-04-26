@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Satellite Object Detection</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <title>Planet x Amazon | Model Results | Geospatial Analytics</title>
     </head>
     <body>
-        <h3>Resnet50 Results</h3>
-        <ul>
-            {% for file, result in content.items() %}
-                <img src="{{ url_for('static', filename='uploads/'+file) }}" style="height: auto; width: auto;"/>
-                <p> {{ result }} </p>
-            {% endfor %}
-            <button type="button" onclick="window.location.href='{{ url_for('main.upload_image') }}'">Back to Upload Screen</button>
-            <button type="button" onclick="window.location.href='{{ url_for('main.index') }}'">Choose a different model!</button>
-        </ul>
+        <div class="container-contact100" style="background-image: url({{ url_for('static', filename='images/bg-01.jpg') }})">
+            <div class="wrap-contact100">
+                <span class="contact100-form-title">
+                    ResNet 50 Results
+                </span>
+
+                <div class="wrap-input100">
+                    <span>
+                        {% for file, result in content.items() %}
+                            <img src="{{ url_for('static', filename='uploads/'+file) }}" style="height: auto; width: auto;"/>
+                            <p class="label-input100"> Image: {{ file }} </p>
+                            <p class="label-input100"> Characteristics: {{ result }} </p>
+                        {% endfor %}
+                    </span>
+                </div>
+
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.upload_image') }}'">Back to Upload 📂</button>
+                    </div>
+                </div>
+
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.index') }}'">Choose a Different Model</button>
+                    </div>
+                </div>
+            </div>
+            
+            <span class="contact100-more">
+                The Geospatial Store © 2020
+            </span>
+        </div>
     </body>
 </html>

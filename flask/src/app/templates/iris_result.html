@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Satellite Object Detection</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <title>Iris | Model Results | Geospatial Analytics</title>
     </head>
     <body>
-        <h3>Iris Model results</h3>
-        {% for input, output in content.items() %}
-        <p> Petal Width: {{ input }}, Petal Length: {{ output }} </p>
-        {% endfor %}
-        <button type="button" onclick="window.location.href='{{ url_for('main.iris') }}'">Back to Input Screen</button>
-        <button type="button" onclick="window.location.href='{{ url_for('main.index') }}'">Choose a different model!</button>
+        <div class="container-contact100" style="background-image: url({{ url_for('static', filename='images/bg-01.jpg') }})">
+            <div class="wrap-contact100">
+                <span class="contact100-form-title">
+                    Iris Model Results
+                </span>
+
+                <div class="wrap-input100">
+                    <span>
+                        {% for input, output in content.items() %}
+                            <p class="label-input100"> Petal Width: {{ input }}, Petal Length: {{ output }} </p>
+                        {% endfor %}
+                    </span>
+                </div>
+
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.iris') }}'">Back to Input 🌸 </button>
+                    </div>
+                </div>
+
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.index') }}'">Choose a Different Model</button>
+                    </div>
+                </div>
+            </div>
+
+            <span class="contact100-more">
+                The Geospatial Store © 2020
+            </span>
+        </div>
     </body>
 </html>
