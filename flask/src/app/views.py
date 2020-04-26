@@ -25,7 +25,7 @@ def iris():
     return render_template('iris.html')
 
 # Predict petal length with a POST request or within the application form
-# TODO: Multiple uploads
+# TODO: Multiple uploads?
 @main.route('/predict_petal_length_api', methods=['GET', 'POST'])
 @main.route('/predict_petal_length', methods=['GET', 'POST'])
 def predict_petal_length():
@@ -38,9 +38,6 @@ def predict_petal_length():
     prediction_results = iris_model.predict_length(petal_width)
     response = json.dumps(prediction_results[0])
 
-    # New prediction/db update (pulled from master) - 4/21
-    # - comment out b/c fastai doesn't work
-    
     new_prediction = Prediction(
         user_id=random.randint(0, 100),
         time=datetime.datetime.now(),
@@ -49,8 +46,8 @@ def predict_petal_length():
         result=response
     )
 
-    # db.session.add(new_prediction)
-    # db.session.commit()
+    db.session.add(new_prediction)
+    db.session.commit()
 
     # If the request path is from the GUI, then render the correct template, return a JSON of model results
     if request.path == '/predict_petal_length':
@@ -108,19 +105,15 @@ def upload_image():
   
         results = []
         
-        # Iterate over all of the valid files and save to the filesystem
+        # Iterate over all opf the valid files and save to the filesystem
         for file, name in zip(images, filenames):
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], name)
             file.save(filepath)
 
             # Run the landcover prediction model on the file and save results
             prediction_results = planet_model.predict_landcover_type(filepath)
-
             results.append(prediction_results)
         
-            # New prediction/db update (pulled from master) - 4/21
-            # - comment out b/c fastai doesn't work
-            
             new_prediction = Prediction(
                 user_id=random.randint(0, 100),
                 time=datetime.datetime.now(),
@@ -148,7 +141,6 @@ def upload_image():
 def serve_file(filepath):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
 
-# New route (pulled from master) - 4/21
 @main.route('/dashboard/<user_id>')
 def user_display(user_id):
     query = Prediction.query.filter_by(user_id=user_id)
