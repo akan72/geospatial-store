@@ -14,7 +14,7 @@
                 <div class="wrap-input100">
                     <span>
                         {% for input, output in content.items() %}
-                            <p class="label-input100"> Petal Width: {{ input }}, Petal Length: {{ output }} </p>
+                            <p class="label-input100"> Petal Width: {{ input }}, Petal Length: {{ output|float|round(2, 'floor')}} </p>
                         {% endfor %}
                     </span>
                 </div>
