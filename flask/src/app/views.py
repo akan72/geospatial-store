@@ -141,6 +141,7 @@ def upload_image():
 def serve_file(filepath):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
 
+# TODO
 @main.route('/dashboard/<user_id>')
 def user_display(user_id):
     query = Prediction.query.filter_by(user_id=user_id)
