@@ -54,7 +54,7 @@ def predict_petal_length():
 
     # If the request path is from the GUI, then render the correct template, return a JSON of model results
     if request.path == '/predict_petal_length':
-        content = dict(zip(petal_width, response))
+        content = {petal_width: response}
 
         return render_template('iris_result.html', content=content)
 
