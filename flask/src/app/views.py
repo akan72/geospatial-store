@@ -122,8 +122,8 @@ def upload_image():
                 result=prediction_results
             )
 
-            # db.session.add(new_prediction)
-            # db.session.commit()
+            db.session.add(new_prediction)
+            db.session.commit()
 
         # Zip together results with file names for storage
         output = dict(zip(filenames, results))
