@@ -11,7 +11,7 @@ services:
     environment:
       # this flag allows you to hot reload w/o building each time
       FLASK_DEBUG: 1
-      # - APP_NAME=Geospatial_Store
+      IN_CONTAINER: 1
     expose:
       - 8080
   
