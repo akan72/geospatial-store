@@ -1,8 +1,10 @@
-import os, sys
+import os
+import sys
 import json
 import random
 import pickle
 import datetime
+
 from numpy import round
 from flask import request, render_template, url_for, send_from_directory, jsonify, Blueprint
 
