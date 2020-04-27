@@ -11,12 +11,27 @@
                     Dashboard
                 </span>
 
-                <!--
-                    INSERT CONTENT HERE
-                -->
+                <table>
+                    {% for id, result in content.items() %}
+                    <TR>
+                       <TD class="c2">{{ id }}</TD>
+                       <TD class="c2">{{ result[0] }}</TD>
+                       <TD class="c3">{{ result[1] }}</TD>
+                       <TD class="c2">{{ result[2] }}</TD>
+                       <TD class="c3">{{ result[3] }}</TD>
+                    </TR>
+                    {% endfor %}
+                    </table>
 
+                <br>
+
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" display="block" onclick="window.location.href='{{ url_for('main.index') }}';">Return to Home Screen</option>
+                    </div>
+                </div>
             </div>
-            
             <span class="contact100-more">
                 The Geospatial Store © 2020
             </span>
