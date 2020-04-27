@@ -3,6 +3,7 @@ import json
 import random
 import pickle
 import datetime
+from numpy import round
 from flask import request, render_template, url_for, send_from_directory, jsonify, Blueprint
 
 from src.app import app, db
@@ -39,13 +40,13 @@ def predict_petal_length():
     response = json.dumps(prediction_results[0])
 
     new_prediction = Prediction(
-        user_id=random.randint(0, 100),
-        time=datetime.datetime.now(),
+        user_id=random.randint(0, 5),
         model_type='Iris',
-        image=None,
-        result=response
+        time=datetime.datetime.now(),
+        image_path=None,
+        model_result=round(prediction_results, 2)
     )
-
+    
     db.session.add(new_prediction)
     db.session.commit()
 
@@ -115,15 +116,15 @@ def upload_image():
             results.append(prediction_results)
         
             new_prediction = Prediction(
-                user_id=random.randint(0, 100),
-                time=datetime.datetime.now(),
+                user_id=random.randint(0, 5),
                 model_type='Planet',
-                image=filepath,
-                result=prediction_results
+                time=datetime.datetime.now(),
+                image_path=name,
+                model_result=prediction_results
             )
 
-            # db.session.add(new_prediction)
-            # db.session.commit()
+            db.session.add(new_prediction)
+            db.session.commit()
 
         # Zip together results with file names for storage
         output = dict(zip(filenames, results))
@@ -140,6 +141,20 @@ def upload_image():
 @main.route('/data/uploads/<filepath>')
 def serve_file(filepath):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
+
+@main.route('/dashboard')
+def dashboard():
+    all_model_results = Prediction.query.all()
+    ids = []
+    results = []
+
+    for result in all_model_results:
+        ids.append(result.user_id)
+        results.append([result.model_type, result.time.strftime('%m/%d/%Y'), result.image_path, result.model_result])
+
+    content = dict(zip(ids, results))
+
+    return render_template('dashboard.html', content=content)
 
 # TODO
 @main.route('/dashboard/<user_id>')
