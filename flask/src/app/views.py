@@ -27,12 +27,15 @@ def index():
 def iris():
     return render_template('iris.html')
 
-# Predict petal length with a POST request or within the application form
-# TODO: Multiple uploads?
 @main.route('/predict_petal_length_api', methods=['GET', 'POST'])
 @main.route('/predict_petal_length', methods=['GET', 'POST'])
 def predict_petal_length():
-    # Allow for handling of form input, well as field and JSON input
+    """ Predict Petal Length based on Petal Width for the canonical `Iris` dataset
+
+    Allows for input using a form within the application or through a POST request 
+    with possibly JSON-encoded input.
+
+    """
     if request.is_json:
         petal_width = request.get_json()['petal_width']
     else: 
@@ -51,9 +54,9 @@ def predict_petal_length():
     
     db.session.add(new_prediction)
     db.session.commit()
-
+    
     # If the request path is from the GUI, then render the correct template, return a JSON of model results
-    if request.path == '/predict_petal_length':
+    if str(request.path) == '/predict_petal_length':
         content = {petal_width: response}
 
         return render_template('iris_result.html', content=content)
@@ -79,33 +82,26 @@ def allowed_file(filename: str):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# Upload the file to our system
 @main.route('/upload_image_api', methods=['GET', 'POST'])
 @main.route('/upload_image', methods=['GET', 'POST'])
 def upload_image():
+    """ Upload a Planet Kaggle Amazon image to our application
+
+    """
     # If the API does not receive a POST request, return back to the image upload page
     if request.method == 'POST':
         images, filenames = [], []
 
+    
         # If the image input is in JSON format, iterate over the keys and save files with valid extensions
-        if request.is_json: 
-            for file in request.files.keys():
-                image = request.files[file]
-                name = file.filename
+        # Takes in images with the encoding 'multipart/form-data' (handled by an HTML form or the `requests` module)
+        for file in request.files.getlist('file'):
+            name = file.filename
 
-                if allowed_file(name):
-                    images.append(image)
-                    filenames.append(name)
+            if allowed_file(name):
+                images.append(file)
+                filenames.append(name)
 
-        # If image input is thorugh a form, do the same 
-        else:
-            for file in request.files.getlist('file'):
-                name = file.filename
-
-                if allowed_file(name):
-                    images.append(file)
-                    filenames.append(name)
-  
         results = []
         
         # Iterate over all opf the valid files and save to the filesystem
@@ -132,20 +128,27 @@ def upload_image():
         output = dict(zip(filenames, results))
 
         # If calling the endpoint through the application, render the results page, else just return the predictions
-        if request.path == '/upload_image':
+        if str(request.path) == '/upload_image':
             return render_template('image_result.html', content=output)
 
         return jsonify(output)
 
     return render_template('image_upload.html')
 
-# Endpoint to serve back the uploaded image to image_result.html
 @main.route('/data/uploads/<filepath>')
 def serve_file(filepath):
+    """ Serve back the uploaded image to image_result.html 
+
+    """
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
 
 @main.route('/dashboard')
 def dashboard():
+    """ Display all model prediction results in a tabular format
+
+    Tables results are sorted by user_id, ascending
+
+    """
     all_model_results = Prediction.query.all()
     content = []
 
@@ -157,14 +160,24 @@ def dashboard():
 
     return render_template('dashboard.html', content=content)
 
-# TODO
+# TODO:
 @main.route('/dashboard/<user_id>')
-def user_display(user_id):
+def user_display(user_id: int):
+    """ Display model prediction results for a specific user
+
+    """
     query = Prediction.query.filter_by(user_id=user_id)
     predictions = [u.__dict__ for u in query.all()]
     
     return render_template('user_display.html', predictions=predictions)
 
-@main.route('/test')
-def test():
-    return jsonify({'k1': 'v1', 'k2': 'v2', 'k3': 'v3'})
+# TODO: 
+@main.route('/dashboard/<model_type>')
+def model_display(model_type: str):
+    """ Display model prediction results for a specific model
+
+    """
+    query = Prediction.query.filter_by(model_type=model_type)
+    predictions = [u.__dict__ for u in query.all()]
+
+    return render_template('model_display.html', predictions=predictions)
