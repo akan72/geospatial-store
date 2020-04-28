@@ -16,11 +16,26 @@ cd comp590
 ```
 
 Next, we must set up the `Flask` development environment. This repository utilizes the `dotenv` package to manage app settings.
-Starting off, we will use `development` mode and thus flask requires us to define two environment variables.
+Starting off, we will use `development` mode and thus Flask requires us to define two environment variables.
 
 ```{shell}
 echo "FLASK_APP=src/app/__init__.py" >> flask/.env
 echo "FLASK_ENV=development" >> flask/.env
+```
+
+Run the script `create_db.py` to initialize the SQLAlchemy database on your local machine.
+
+```{shell}
+python flask/create_db.py
+```
+
+We use SQLAlchemy to create a light lightweight Object-Relational Mapping (ORM) to create a virtual Sqlite3 database for model
+prediction results that lives in file. To view these results after running several models and creating the database,
+you can run: 
+
+```{shell}
+sqlite3 flask/src/app/database.db
+SELECT * FROM prediction;
 ```
 
 Build and Test
@@ -46,7 +61,7 @@ You must rebuild the image every time changes are made, but if you wish to resta
 docker-compose up
 ```
 
-For rapid development and testing, the `Flask` application can be run without the web services by running `flask run` within the `flask` directory and navigating to http://127.0.0.1:5000/.
+For rapid development and testing, the `Flask` application can be started without the webserver or container by running`flask run` within the `flask` directory and navigating to <http://127.0.0.1:5000/>.
 
 Data Sources
 
@@ -75,10 +90,12 @@ Project Directory Organization
 │   │   │   ├── static
             │   ├── uploads     <- Temporarily holds all images uploaded to the application
 │   │   │   ├── templates       <- Directory to hold all .html templates for the `Flask` application
+            ├── models.py       <- Script that contains the Schema for our API's prediction results
 │   │   │   └── views.py        <- Script that contains all `Flask` application logic
 │   │   ├── models              <- Scripts to train and serialize models, and then use to make predictions
 │   │   └── visualization       <- Scripts to perform exploratory data analysis and visualization
 │   ├── test_requests.py        <- Script to test the API using python's `requests` package
+|   ├── create_db.py            <- Script to initialize the SQLAlchemy database
 │   └── uwsgi.ini               <- uWSGI config file
 ├── nginx
 │   ├── Dockerfile              <- Dockerfile for the `nginx` service
