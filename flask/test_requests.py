@@ -1,7 +1,11 @@
-import requests 
+import os 
 import json
+import requests 
 
 addr = 'http://localhost:5000'
+print(os.getenv('IN_CONTAINER'))
+
+
 if os.getenv('IN_CONTAINER'):
     addr = addr[:-5]
 
