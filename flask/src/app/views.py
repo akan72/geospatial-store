@@ -147,14 +147,13 @@ def serve_file(filepath):
 @main.route('/dashboard')
 def dashboard():
     all_model_results = Prediction.query.all()
-    ids = []
-    results = []
+    content = []
 
     for result in all_model_results:
-        ids.append(result.user_id)
-        results.append([result.model_type, result.time.strftime('%m/%d/%Y'), result.image_path, result.model_result])
+        record = [result.user_id, result.model_type, result.time.strftime('%m/%d/%Y'), '' if result.image_path is None else result.image_path, result.model_result]
+        content.append(record)
 
-    content = dict(zip(ids, results))
+    content = sorted(content, key = lambda x: x[0])
 
     return render_template('dashboard.html', content=content)
 

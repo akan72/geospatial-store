@@ -12,16 +12,16 @@
                 </span>
 
                 <table>
-                    {% for id, result in content.items() %}
+                    {% for record in content %}
                     <TR>
-                       <TD class="c2">{{ id }}</TD>
-                       <TD class="c2">{{ result[0] }}</TD>
-                       <TD class="c3">{{ result[1] }}</TD>
-                       <TD class="c2">{{ result[2] }}</TD>
-                       <TD class="c3">{{ result[3] }}</TD>
+                       <TD class="c2">{{ record[0] }}</TD>
+                       <TD class="c3">{{ record[1] }}</TD>
+                       <TD class="c2">{{ record[2] }}</TD>
+                       <TD class="c3">{{ record[3] }}</TD>
+                       <TD class="c3">{{ record[4] }}</TD>
                     </TR>
                     {% endfor %}
-                    </table>
+                </table>
 
                 <br>
 
