@@ -13,13 +13,17 @@
 
                 <table>
                     {% for record in content %}
-                    <TR>
-                       <TD class="c2">{{ record[0] }}</TD>
-                       <TD class="c3">{{ record[1] }}</TD>
-                       <TD class="c2">{{ record[2] }}</TD>
-                       <TD class="c3">{{ record[3] }}</TD>
-                       <TD class="c3">{{ record[4] }}</TD>
-                    </TR>
+                    <tr>
+                       <td class="c2">{{ record[0] }}</td>
+                       <td class="c3">{{ record[1] }}</td>
+                       <td class="c2">{{ record[2] }}</td>
+                       <td class="c3">
+                           {% if record[3]| length > 0 %}
+                                <a href="{{ url_for('static', filename='uploads/'+record[3]) }}">Link</a>
+                           {% endif %}
+                       </td>
+                       <td class="c3">{{ record[4] }}</td>
+                    </tr>
                     {% endfor %}
                 </table>
 
