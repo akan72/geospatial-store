@@ -77,33 +77,31 @@ Project Directory Organization
 ├── README.md
 ├── docker-compose.yml          <- Configuration file for Docker Compose
 ├── flask
-│   ├── Dockerfile              <- Dockerfile for the `Flask` service
+│   ├── Dockerfile
 │   ├── data
-│   │   ├── processed           <- The final, canonical data sets for modeling
-│   │   ├── raw                 <- The original, immutable data dump
+│   │   ├── raw             <- Directory of sample images for the various models
 │   ├── main.py                 <- Entrypoint for the `Flask` application
-│   ├── models                  <- Trained and serialized models, model predictions, or model summaries
-│   ├── notebooks               <- Jupyter notebooks for exploration and model testing
+│   ├── models                  <- Directory of Trained and serialized models used for making predictions
+│   ├── notebooks               <- Directory of Jupyter notebooks for exploration and model testing
 │   ├── requirements.txt        <- The requirements file for reproducing the analysis environment
-│   ├── src                     <- Directory that holds all application and modeling code
-│   │   ├── app                 <- Directory that holds all `Flask` application logic and frontend
+│   ├── src
+│   │   ├── app
 │   │   │   ├── static
-            │   ├── uploads     <- Temporarily holds all images uploaded to the application
-│   │   │   ├── templates       <- Directory to hold all .html templates for the `Flask` application
-            ├── models.py       <- Script that contains the Schema for our API's prediction results
-│   │   │   └── views.py        <- Script that contains all `Flask` application logic
-│   │   ├── models              <- Scripts to train and serialize models, and then use to make predictions
+│   │   │   │   ├── uploads     <- Temporary location for all images uploaded to our application
+│   │   │   ├── templates       <- Directory of templates for the `Flask` application
+│   │   │   ├── models.py       <- Contains the schema for our API's prediction results
+│   │   │   └── views.py        <- Backend logic for the `Flask` application
+│   │   ├── models              <- Scripts to train and serialize models
 │   │   └── visualization       <- Scripts to perform exploratory data analysis and visualization
-│   ├── test_requests.py        <- Script to test the API using python's `requests` package
-|   ├── create_db.py            <- Script to initialize the SQLAlchemy database
+│   ├── test_requests.py        <- Example of how to use our API using Python's `requests` package
+|   ├── create_db.py            <- Script that initializes the SQLAlchemy database
 │   └── uwsgi.ini               <- uWSGI config file
 ├── nginx
-│   ├── Dockerfile              <- Dockerfile for the `nginx` service
-│   └── nginx.conf              <- Nginx configuration file
-├── references                  <- Data dictionaries, manuals, and all other explanatory materials
+│   ├── Dockerfile
+│   └── nginx.conf              <- `Nginx` configuration file
 └── reports                     <- Generated analysis as HTML, PDF, LaTeX, etc.
     └── figures                 <- Generated graphics and figures to be used in reporting
-│   │   └── uploads<- Directory to store images uploaded to the application
+
 ```
 
 ------------

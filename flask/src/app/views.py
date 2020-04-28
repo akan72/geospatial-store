@@ -17,12 +17,12 @@ main = Blueprint('main', __name__)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
-# Index
 @main.route('/')
 def index():
     return render_template('index.html')
 
 ### PREDICTIONS 
+
 @main.route('/iris')
 def iris():
     return render_template('iris.html')
@@ -141,6 +141,8 @@ def serve_file(filepath):
 
     """
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
+
+### DASHBOARD 
 
 @main.route('/dashboard')
 def dashboard():
