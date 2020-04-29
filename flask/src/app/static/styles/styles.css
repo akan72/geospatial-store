@@ -130,6 +130,14 @@ iframe {
   position: relative;
 }
 
+.wrap-dashboard100 {
+  max-width: 1250px;
+  background: #fff;
+  border-radius: 2px;
+  padding: 66px 115px 59px 115px;
+  position: relative;
+}
+
 
 /*==================================================================
 [ Form ]*/
