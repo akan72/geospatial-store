@@ -157,12 +157,6 @@ def dashboard(user_id: int = None, model_type: str = None):
     user_id = request.args.get('user_id', default=None)
     model_type = request.args.get('model_type', default=None)
 
-    if request.is_json:
-        params = request.get_json()
-
-        user_id = params['user_id'] if 'user_id' in params else None
-        model_type = params['model_type'] if 'model_type' in params else None
-
     if user_id and model_type:
         results = Prediction.query.filter_by(user_id=user_id, model_type=model_type)
     elif user_id is not None:
