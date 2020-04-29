@@ -144,42 +144,41 @@ def serve_file(filepath):
 
 ### DASHBOARD 
 
-@main.route('/dashboard')
-def dashboard():
+@main.route('/dashboard', methods=['GET', 'POST'])
+@main.route('/dashboard/<int:user_id>', methods=['GET', 'POST'])
+@main.route('/dashboard/<string:model_type>', methods=['GET', 'POST'])
+@main.route('/dashboard/<int:user_id>/<string:model_type>', methods=['GET', 'POST'])
+def dashboard(user_id: int = None, model_type: str = None):
     """ Display all model prediction results in a tabular format
 
     Tables results are sorted by user_id, ascending
 
     """
-    all_model_results = Prediction.query.all()
-    content = []
+    user_id, model_type = None, None
+    if request.is_json:
+        params = request.get_json()
+        print(type(params))
 
-    for result in all_model_results:
+        user_id = params['user_id'] if 'user_id' in params else None
+        model_type = params['model_type'] if 'model_type' in params else None
+
+    if user_id and model_type:
+        results = Prediction.query.filter_by(user_id=user_id, model_type=model_type)
+        print(results)
+    elif user_id is not None:
+        results = Prediction.query.filter_by(user_id=user_id)
+        print(user_id)
+    elif model_type is not None:
+        results = Prediction.query.filter_by(model_type=model_type)
+        print(model_type)
+    else:
+        results = Prediction.query.all()
+
+    content = []
+    for result in results:
         record = [result.user_id, result.model_type, result.time.strftime('%m/%d/%Y'), '' if result.image_path is None else result.image_path, result.model_result]
         content.append(record)
 
     content = sorted(content, key = lambda x: x[0])
 
     return render_template('dashboard.html', content=content)
-
-# TODO:
-@main.route('/dashboard/<user_id>')
-def user_display(user_id: int):
-    """ Display model prediction results for a specific user
-
-    """
-    query = Prediction.query.filter_by(user_id=user_id)
-    predictions = [u.__dict__ for u in query.all()]
-    
-    return render_template('user_display.html', predictions=predictions)
-
-# TODO: 
-@main.route('/dashboard/<model_type>')
-def model_display(model_type: str):
-    """ Display model prediction results for a specific model
-
-    """
-    query = Prediction.query.filter_by(model_type=model_type)
-    predictions = [u.__dict__ for u in query.all()]
-
-    return render_template('model_display.html', predictions=predictions)
