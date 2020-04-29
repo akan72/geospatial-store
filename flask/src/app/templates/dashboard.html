@@ -12,16 +12,20 @@
                 </span>
 
                 <table>
-                    {% for id, result in content.items() %}
-                    <TR>
-                       <TD class="c2">{{ id }}</TD>
-                       <TD class="c2">{{ result[0] }}</TD>
-                       <TD class="c3">{{ result[1] }}</TD>
-                       <TD class="c2">{{ result[2] }}</TD>
-                       <TD class="c3">{{ result[3] }}</TD>
-                    </TR>
+                    {% for record in content %}
+                    <tr>
+                       <td class="c2">{{ record[0] }}</td>
+                       <td class="c3">{{ record[1] }}</td>
+                       <td class="c2">{{ record[2] }}</td>
+                       <td class="c3">
+                           {% if record[3]| length > 0 %}
+                                <a href="{{ url_for('static', filename='uploads/'+record[3]) }}">Link</a>
+                           {% endif %}
+                       </td>
+                       <td class="c3">{{ record[4] }}</td>
+                    </tr>
                     {% endfor %}
-                    </table>
+                </table>
 
                 <br>
 
