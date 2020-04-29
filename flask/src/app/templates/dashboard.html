@@ -6,29 +6,40 @@
     </head>
     <body>
         <div class="container-contact100" style="background-image: url({{ url_for('static', filename='images/bg-01.jpg') }})">
-            <div class="wrap-dashboard100">
+            <div class="wrap-contact100">
                 <span class="contact100-form-title">
                     Dashboard
                 </span>
 
                 <form class="contact100-form validate-form"  action="{{ url_for('main.dashboard') }}" method="GET">
-                    <label>Filter by user_id: </label>
+                    <label class="label-input100">Filter by user_id: </label>
                     <select name="user_id">
                         <option value="1">1</option>
                         <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option valfue="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
                     </select>
-                    <label>Filter by model_type: </label>
+                    <label class="label-input100">Filter by model_type: </label>
                     <select name="model_type">
                         <option value="Iris">Iris</option>
                         <option value="Planet">Planet</option>
                     </select>
-                    <input type="submit" value="Submit Filter">
+                    <div class="container-contact100-form-btn">
+                        <div class="wrap-contact100-form-btn">
+                            <div class="contact100-form-bgbtn"></div>
+                            <button class="contact100-form-btn" type="submit">Submit Filter</button>
+                        </div>
+                    </div>
                 </form>
                 <br>
                 <table>
+                    <th>User Id</th>
+                    <th>Model Type</th>
+                    <th>Date</th>
+                    <th>Image</th>
+                    <th>Prediction</th>
+
                     {% for record in content %}
                     <tr>
                        <td class="c2">{{ record[0] }}</td>
