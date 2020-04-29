@@ -11,7 +11,37 @@
                     Dashboard
                 </span>
 
+                <form class="contact100-form validate-form"  action="{{ url_for('main.dashboard') }}" method="GET">
+                    <label class="label-input100">Filter by user_id: </label>
+                    <select class="select-css" name="user_id">
+                        <option value="" selected disabled></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <label class="label-input100">Filter by model_type: </label>
+                    <select class="select-css" name="model_type">
+                        <option value="" selected disabled></option>
+                        <option value="Iris">Iris</option>
+                        <option value="Planet">Planet</option>
+                    </select>
+                    <div class="container-contact100-form-btn">
+                        <div class="wrap-contact100-form-btn">
+                            <div class="contact100-form-bgbtn"></div>
+                            <button class="contact100-form-btn" type="submit">Submit Filter</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
                 <table>
+                    <th>User Id</th>
+                    <th>Model Type</th>
+                    <th>Date</th>
+                    <th>Image</th>
+                    <th>Prediction</th>
+
                     {% for record in content %}
                     <tr>
                        <td class="c2">{{ record[0] }}</td>

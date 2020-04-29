@@ -130,6 +130,14 @@ iframe {
   position: relative;
 }
 
+.wrap-dashboard100 {
+  max-width: 1250px;
+  background: #fff;
+  border-radius: 2px;
+  padding: 66px 115px 59px 115px;
+  position: relative;
+}
+
 
 /*==================================================================
 [ Form ]*/
@@ -214,6 +222,30 @@ input[type="file"] {
   text-align: center;
 }
 
+
+/*---------------------------------------------*/
+
+.select-style {
+  border: 1px solid #ccc;
+  width: 120px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #fafafa no-repeat 90% 50%;
+}
+
+.select-style select {
+  padding: 5px 8px;
+  width: 130%;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+}
+
+.select-style select:focus {
+  outline: none;
+}
 
 /*---------------------------------------------*/
 input.input100 {
