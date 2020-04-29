@@ -21,4 +21,7 @@ r = requests.post(planet_url, files=files)
 print(r.text)
 print(r.status_code)
 
+r = requests.post(addr+'/predict_petal_length_api', data={'petal_width': 1})
+print(r.text)
+
 # curl -F "file=@data/raw/test-jpg/test_11.jpg" http://localhost:5000/upload_image_api
