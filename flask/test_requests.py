@@ -1,7 +1,6 @@
 import os 
 import json
 import requests 
-from flask import jsonify
 
 addr = 'http://localhost:5000'
 
