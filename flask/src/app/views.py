@@ -12,6 +12,7 @@ from src.app import app, db
 from src.app.models import Prediction
 import src.models.iris_model as iris_model
 import src.models.planet_model as planet_model
+import src.models.windmill_model as windmill_model
 
 main = Blueprint('main', __name__)
 
@@ -92,7 +93,6 @@ def upload_image():
     if request.method == 'POST':
         images, filenames = [], []
 
-    
         # If the image input is in JSON format, iterate over the keys and save files with valid extensions
         # Takes in images with the encoding 'multipart/form-data' (handled by an HTML form or the `requests` module)
         for file in request.files.getlist('file'):
@@ -135,12 +135,71 @@ def upload_image():
 
     return render_template('image_upload.html')
 
-@main.route('/data/uploads/<filepath>')
-def serve_file(filepath):
-    """ Serve back the uploaded image to image_result.html 
+@main.route('/windmill_api', methods=['GET', 'POST'])
+@main.route('/windmill', methods=['GET', 'POST'])
+def upload_windmill():
+    """ Upload a Windmill image to our application
 
     """
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
+    # If the API does not receive a POST request, return back to the image upload page
+    if request.method == 'POST':
+        images, filenames = [], []
+
+        # If the image input is in JSON format, iterate over the keys and save files with valid extensions
+        # Takes in images with the encoding 'multipart/form-data' (handled by an HTML form or the `requests` module)
+        for file in request.files.getlist('file'):
+            name = file.filename
+
+            if allowed_file(name):
+                images.append(file)
+                filenames.append(name)
+
+        results = []
+        
+        # Iterate over all opf the valid files and save to the filesystem
+        for file, name in zip(images, filenames):
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], name)
+            file.save(filepath)
+
+            # Run the landcover prediction model on the file and save results
+            prediction_results = windmill_model.predict_windmill_orientation(filepath)
+            prediction_results = prediction_results[prediction_results.find('windmills/'):]
+
+            results.append(prediction_results)
+        
+            new_prediction = Prediction(
+                user_id=random.randint(0, 5),
+                model_type='Windmill',
+                time=datetime.datetime.now(),
+                image_path=name,
+                model_result=prediction_results
+            )
+
+            db.session.add(new_prediction)
+            db.session.commit()
+
+        # Zip together results with file names for storage
+        output = dict(zip(filenames, results))
+
+        # If calling the endpoint through the application, render the results page, else just return the predictions
+        if str(request.path) == '/windmill':
+            return render_template('windmill_result.html', content=output)
+
+        return jsonify(output)
+
+    return render_template('windmill_upload.html')
+
+# @main.route('/data/uploads/<filepath>')
+# def serve_file(filepath):
+#     """ Serve back the uploaded image to image_result.html 
+
+#     """
+#     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
+
+@main.route('/data/processed/<filepath>')
+def serve_file(filepath):
+    print('data'+filepath[5:])
+    return send_from_directory('data/', filename=filepath[5:])
 
 ### DASHBOARD 
 
@@ -156,12 +215,6 @@ def dashboard(user_id: int = None, model_type: str = None):
     """
     user_id = request.args.get('user_id', default=None)
     model_type = request.args.get('model_type', default=None)
-
-    if request.is_json:
-        params = request.get_json()
-
-        user_id = params['user_id'] if 'user_id' in params else None
-        model_type = params['model_type'] if 'model_type' in params else None
 
     if user_id and model_type:
         results = Prediction.query.filter_by(user_id=user_id, model_type=model_type)
