@@ -12,6 +12,7 @@ google-api-python-client==1.7.11
 earthengine-api==0.1.219
 Flask-SQLAlchemy==2.4.1
 SQLAlchemy==1.3.16
+opencv-python==4.2.0.34
  
 # external requirements
 click
