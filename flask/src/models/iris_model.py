@@ -28,7 +28,7 @@ def predict_length(petal_width: int=0)-> float:
     Used within views.py to servee the prediction results.
 
     Args:
-        petal_width (int): Petal length input by user
+        petal_width [int]: Petal length input by user
     
     Returns:
         float: Petal_length predicted by our linear model.

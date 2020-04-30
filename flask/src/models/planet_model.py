@@ -13,7 +13,7 @@ def predict_landcover_type(filepath: str) -> List[str]:
     https://docs.fast.ai/vision.image.html
 
     Args:
-        filepath (str): Path to the image that will be run through the model 
+        filepath [str]: Path to the image that will be run through the model 
 
     Returns:
         List[str]: A list of string labels resulting from a combination of the following land cover types: 
@@ -45,8 +45,8 @@ def top_k_predictions(model, probs, k: int):
         k [int]: Number of classes/probabilities to return 
 
     Returns:
-        List[str]: Top k classes
-        List[tensor]: Probabilities associated with the top k classess
+        List [str]: Top k classes
+        List [tensor]: Probabilities associated with the top k classess
 
     """
     
