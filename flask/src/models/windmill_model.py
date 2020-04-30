@@ -1,7 +1,9 @@
+import os
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
-import os
+import matplotlib
+
+matplotlib.use('agg')
 
 def predict_windmill_orientation(filepath: str)-> str:
     """ Predict the orientation of an image containing a windmill
@@ -41,13 +43,13 @@ def predict_windmill_orientation(filepath: str)-> str:
         cv2.line(img,(x1,y1),(x2,y2),(0,255,0),5)
         
     upload_idx = filepath.find('uploads/')
-    output_path = 'data/processed/windmills/' + filepath[upload_idx+8:]
+    output_path = 'src/app/static/output/windmills/'  + filepath[upload_idx+8:]
 
     # upload_idx = filepath.find('windmills/') 
     # output_path = 'data/processed/windmills/' + filepath[upload_idx+10:]
 
     # save image
-    plt.imshow(img)
-    plt.savefig(output_path)
+    matplotlib.pyplot.imshow(img)
+    matplotlib.pyplot.savefig(output_path)
 
     return output_path

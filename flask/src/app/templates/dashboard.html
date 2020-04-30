@@ -26,6 +26,7 @@
                         <option value="" selected disabled></option>
                         <option value="Iris">Iris</option>
                         <option value="Planet">Planet</option>
+                        <option value="Windmill">Windmill</option>
                     </select>
                     <div class="container-contact100-form-btn">
                         <div class="wrap-contact100-form-btn">
@@ -52,7 +53,14 @@
                                 <a href="{{ url_for('static', filename='uploads/'+record[3]) }}">Link</a>
                            {% endif %}
                        </td>
-                       <td class="c3">{{ record[4] }}</td>
+                       <td class="c3">
+                           {% if record[4] is not string %}
+                                {{ record[4] }}
+                           {% else %}
+                                <a href="{{ url_for('static', filename='output/'+record[4]) }}">Link</a>
+                           {% endif %}
+                        </td>
+                        
                     </tr>
                     {% endfor %}
                 </table>
