@@ -28,8 +28,8 @@ def index():
 def iris():
     return render_template('iris.html')
 
-@main.route('/predict_petal_length_api', methods=['GET', 'POST'])
 @main.route('/predict_petal_length', methods=['GET', 'POST'])
+@main.route('/predict_petal_length_api', methods=['GET', 'POST'])
 def predict_petal_length():
     """ Predict Petal Length based on Petal Width for the canonical `Iris` dataset
 
@@ -83,8 +83,8 @@ def allowed_file(filename: str):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@main.route('/upload_image_api', methods=['GET', 'POST'])
 @main.route('/upload_image', methods=['GET', 'POST'])
+@main.route('/upload_image_api', methods=['GET', 'POST'])
 def upload_image():
     """ Upload a Planet Kaggle Amazon image to our application
 
@@ -103,7 +103,6 @@ def upload_image():
                 filenames.append(name)
 
         results = []
-        
         # Iterate over all opf the valid files and save to the filesystem
         for file, name in zip(images, filenames):
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], name)
@@ -135,8 +134,8 @@ def upload_image():
 
     return render_template('image_upload.html')
 
-@main.route('/windmill_api', methods=['GET', 'POST'])
 @main.route('/windmill', methods=['GET', 'POST'])
+@main.route('/windmill_api', methods=['GET', 'POST'])
 def upload_windmill():
     """ Upload a Windmill image to our application
 
