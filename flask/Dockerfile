@@ -6,8 +6,10 @@ WORKDIR /app
 # Copy the current directory (flask) contents into the container at /app
 ADD . /app
 
-# Install dependencies 
+# Upgrade pip and install dependencies
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # start uWSGI
 CMD ["uwsgi", "uwsgi.ini"]
+

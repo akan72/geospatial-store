@@ -15,7 +15,6 @@
                     <span>
                         {% for file, result in content.items() %}
                             <img src="{{ url_for('static', filename='output/'+result) }}" style="height: auto; width: auto;"/>
-                            <p class="label-input100"> Image: {{ file }} </p>           
                         {% endfor %}
                     </span>
                 </div>
@@ -34,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <span class="contact100-more">
                 The Geospatial Store © 2020
             </span>
