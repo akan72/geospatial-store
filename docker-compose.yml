@@ -4,17 +4,14 @@ services:
   
   flask:
     build: ./flask
-    volumes: 
-      - "./flask:/app"
     container_name: flask
     restart: always
+    volumes: 
+      - "./flask:/app"
     environment:
-      # this flag allows you to hot reload w/o building each time
       FLASK_DEBUG: 1
       IN_CONTAINER: 1
-    expose:
-      - 8080
-  
+
   nginx:
     build: ./nginx
     container_name: nginx
