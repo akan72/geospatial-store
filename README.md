@@ -31,7 +31,7 @@ python flask/create_db.py
 
 We use SQLAlchemy to create a light lightweight Object-Relational Mapping (ORM) to create a virtual Sqlite3 database for model
 prediction results that lives in file. To view these results after running several models and creating the database,
-you can run: 
+you can run:
 
 ```{shell}
 sqlite3 flask/src/app/database.db
@@ -63,6 +63,14 @@ docker-compose up
 
 For rapid development and testing, the `Flask` application can be started without the webserver or container by running`flask run` within the `flask` directory and navigating to <http://127.0.0.1:5000/>.
 
+Dashboard
+
+From the index, we have also included a Dashboard where users can see the historical results of trained models. Every request to the API is logged within a SQLite database that stores the user_id of the requester, the time of the request, as well as the type of model and its result.
+
+The dashboard may be filtered by user_id or by model_type, and users can view the original image submitted as well as new images outputted by models performing tasks like segmentation.
+
+------------
+
 Data Sources
 
 ------------
@@ -71,6 +79,7 @@ For sample satellite images one source is the [Planet Amazon Dataset](https://ww
 Project Directory Organization
 
 ------------
+
 
 ```{markdown}
 ├── LICENSE
@@ -103,5 +112,14 @@ Project Directory Organization
     └── figures                 <- Generated graphics and figures to be used in reporting
 
 ```
+
+------------
+
+Future Work
+
+- Upload the container to Docker Hub
+- Add aggregate counts by date to the dashboard, show examples for computing aggregated statistics about different models
+- Create pipeline to ingest Google Earth Engine Polygons for other GEE models
+- Define spec and create example for others to submit additional models
 
 ------------
