@@ -28,8 +28,8 @@ def index():
 def iris():
     return render_template('iris.html')
 
-@main.route('/predict_petal_length', methods=['GET', 'POST'])
 @main.route('/predict_petal_length_api', methods=['GET', 'POST'])
+@main.route('/predict_petal_length', methods=['GET', 'POST'])
 def predict_petal_length():
     """ Predict Petal Length based on Petal Width for the canonical `Iris` dataset
 
@@ -83,8 +83,8 @@ def allowed_file(filename: str):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@main.route('/upload_image', methods=['GET', 'POST'])
 @main.route('/upload_image_api', methods=['GET', 'POST'])
+@main.route('/upload_image', methods=['GET', 'POST'])
 def upload_image():
     """ Upload a Planet Kaggle Amazon image to our application
 
@@ -134,8 +134,8 @@ def upload_image():
 
     return render_template('image_upload.html')
 
-@main.route('/windmill', methods=['GET', 'POST'])
 @main.route('/windmill_api', methods=['GET', 'POST'])
+@main.route('/windmill', methods=['GET', 'POST'])
 def upload_windmill():
     """ Upload a Windmill image to our application
 
@@ -188,14 +188,7 @@ def upload_windmill():
 
     return render_template('windmill_upload.html')
 
-# @main.route('/data/uploads/<filepath>')
-# def serve_file(filepath):
-#     """ Serve back the uploaded image to image_result.html 
-
-#     """
-#     return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filepath)
-
-@main.route('/data/processed/<filepath>')
+@main.route('/data/processed/<string:filepath>')
 def serve_file(filepath):
     print('data'+filepath[5:])
     return send_from_directory('data/', filename=filepath[5:])
