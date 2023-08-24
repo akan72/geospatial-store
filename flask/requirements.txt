@@ -6,7 +6,7 @@ pandas==0.24.2
 seaborn==0.9.0
 requests==2.31.0
 Werkzeug==2.2.3
-uWSGI==2.0.18
+uWSGI==2.0.22
 fastai==1.0.60
 google-api-python-client==1.7.11 
 earthengine-api==0.1.219
